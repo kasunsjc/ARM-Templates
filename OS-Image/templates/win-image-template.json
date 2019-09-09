@@ -29,7 +29,7 @@
                 "type": "WindowsRestart",
                 "restartCheckCommand": "echo Azure-Image-Builder-Restarted-the-VM  > c:\\buildArtifacts\\azureImageBuilderRestart.txt",
                 "restartTimeout": "5m"
-            },
+            }
         ],
         "distribute": 
             [
