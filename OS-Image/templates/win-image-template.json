@@ -23,13 +23,13 @@
             {
                 "type": "PowerShell",
                 "name": "CreateBuildPath",
-                "scriptUri": "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/testPsScript.ps1"
+                "scriptUri": "https://raw.githubusercontent.com/kasunsjc/arm-templates/arm-dev/OS-Image/PS-Scripts/Install-IIS.ps1"
             },
             {
                 "type": "WindowsRestart",
                 "restartCheckCommand": "echo Azure-Image-Builder-Restarted-the-VM  > c:\\buildArtifacts\\azureImageBuilderRestart.txt",
                 "restartTimeout": "5m"
-            },
+            }
         ],
         "distribute": 
             [
