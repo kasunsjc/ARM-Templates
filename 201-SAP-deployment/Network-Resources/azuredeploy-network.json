@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "corp-sap-demo-vnet",
+            "metadata": {
+                "description": "VNET Name"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.10.0.0/16",
+            "metadata": {
+                "description": "VNET Address Prefix"
+            }
+        }
+
+    },
+    "variables": {
+        "subnetNameMgt": "management-subnet",
+        "subnetNameApp": "app-subnet",
+        "subnetNameDB": "db-subnet",
+        "subnetNameMgtPrefix": "10.10.10.0/24",
+        "subnetNameAppPrefix": "10.10.15.0/24",
+        "subnetNameDBPrefix": "10.10.16.0/24"
+    },
+    "resources": [
+        {
+            "name": "[parameters('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2018-08-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "[parameters('vnetName')]"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetNameMgt')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetNameMgtPrefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('subnetNameApp')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetNameAppPrefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('subnetNameDB')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetNameDBPrefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+    }
+}

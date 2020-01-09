@@ -2,7 +2,7 @@
 $ResourceGroup = (New-AzResourceGroup -Name VM-UpdateMgt -Location "Southeast Asia").ResourceGroupName
 
 #Create ARM Deployment
-New-AzResourceGroupDeployment -Name VM-UpdateMgt -ResourceGroupName $ResourceGroup -Mode Incremental -TemplateFile ./201-EnableUpdateManagement/azuredeploy.json -TemplateParameterFile ./201-EnableUpdateManagement/azuredeploy-parm.json -Verbose
+New-AzResourceGroupDeployment -Name VM-UpdateMgt -ResourceGroupName $ResourceGroup -Mode Incremental -TemplateFile ./azuredeploy.json -TemplateParameterFile ./azuredeploy-parm.json -Verbose
 
 #Configure Update Management
 
@@ -13,6 +13,8 @@ $ImediateUpdateStartTime = (Get-Date).AddHours(1)
 $AutomationAccountName = (Get-AzAutomationAccount -ResourceGroupName $ResourceGroup).AutomationAccountName 
 $LogAnalyticsWorkspaceName = (Get-AzOperationalInsightsWorkspace -ResourceGroupName $ResourceGroup).Name
 
+Write-Host "Wait Until VM Extensions are enabled"
+Start-Sleep -Seconds 180
 
 #Create a Weekly Scedule 
 $Schedule = New-AzAutomationSchedule -AutomationAccountName $AutomationAccountName -Name "WeeklyCriticalSecurity" -StartTime $StartTime -WeekInterval 1 -DaysOfWeek $WeekendDay -ResourceGroupName $ResourceGroup -Verbose
